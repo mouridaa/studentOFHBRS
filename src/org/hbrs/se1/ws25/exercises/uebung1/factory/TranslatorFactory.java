@@ -17,12 +17,5 @@ public class TranslatorFactory {
         translator.setDate("Okt/2025");
         return translator;
     }
-    /**
-    public static Translator getTranslator(String date, String lang){
-        if(lang.equals("en")){
-            return new GermanTranslator();
-        }
-        return null;
-    } */
 
 }
