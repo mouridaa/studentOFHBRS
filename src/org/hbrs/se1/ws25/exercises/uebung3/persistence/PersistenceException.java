@@ -5,6 +5,7 @@ public class PersistenceException extends Exception {
     private ExceptionType exceptionType;
 
     public ExceptionType getExceptionTypeType() {
+
         return this.exceptionType;
     }
 

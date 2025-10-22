@@ -17,15 +17,17 @@ public class Container {
             throw new ContainerException("Das Member-Objekt mti der ID " + member.getID() +
                     " ist bereits vorhanden!");
         }
-        if (member != null) {
-            memberList.add(member);
+        if (member == null) {
+            throw new ContainerException("Das Member-Objekt nicht vorhanden!");
         }
+        memberList.add(member);
     }
 
-    //Nachteil dieser Art von Fehlerhandling ist, dass
+    //Nachteil dieser Art von Fehlerhandling ist, dass der Aufrufer aktiv prüfen muss, ob der Rückgabe-
+    //wert einen Fehler signalisiert.
     public String deleteMember(Integer id) {
         for (Member m : memberList) {
-            if (m.getID() == id) {
+            if (m.getID().equals(id)) {
                 memberList.remove(m);
                 return "Member wurde entfernt";
             }
@@ -33,6 +35,7 @@ public class Container {
         return "Zur übergebenen ID ist kein Member-Objekt gespeichert";
     }
 
+    //Geht auch mit while Schleife, normale for-schleife, Iterator, for-each-Methode?
     public void dump() {
         for (Member m : memberList) {
             System.out.println(m) ;

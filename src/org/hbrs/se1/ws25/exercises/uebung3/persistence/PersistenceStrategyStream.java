@@ -1,5 +1,12 @@
 package org.hbrs.se1.ws25.exercises.uebung3.persistence;
+import org.hbrs.se1.ws25.solutions.uebung2.Member;
+
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.io.FileOutputStream; //Schreibt Bytes in eine Datei
+import java.io.IOException;
+import java.io.ObjectOutputStream; //Objekt in Bytes umwandeln
 
 public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
 
@@ -8,6 +15,7 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
 
     // Backdoor method used only for testing purposes, if the location should be changed in a Unit-Test
     // Example: Location is a directory (Streams do not like directories, so try this out ;-)!
+
     public void setLocation(String location) {
         this.location = location;
     }
@@ -20,7 +28,17 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * (Last Access: Oct, 13th 2025)
      */
     public void save(List<E> member) throws PersistenceException  {
-
+        try {
+            FileOutputStream fos = new FileOutputStream(location);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(member);
+            oos.close();
+        } catch (FileNotFoundException ffe) { // Fehler der auftritt, wenn mit dem Zugriff auf externe Ressourcen etwas schief läuft
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable, "Die Location darf kein Verzeichnis sein: " +
+                    location);
+        } catch (IOException ioe) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable, ioe.getMessage());
+        }
     }
 
     @Override
@@ -29,27 +47,21 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * Some coding examples come for free :-)
      * Take also a look at the import statements above ;-!
      */
-    public List<E> load() throws PersistenceException  {
-        // Some Coding hints ;-)
-
-        // ObjectInputStream ois = null;
-        // FileInputStream fis = null;
-        // List<...> newListe =  null;
-        //
-        // Initiating the Stream (can also be moved to method openConnection()... ;-)
-        // fis = new FileInputStream( " a location to a file" );
-
-        // Tipp: Use a directory (ends with "/") to implement a negative test case ;-)
-        // ois = new ObjectInputStream(fis);
-
-        // Reading and extracting the list (try .. catch ommitted here)
-        // Object obj = ois.readObject();
-
-        // if (obj instanceof List<?>) {
-        //       newListe = (List) obj;
-        // return newListe
-
-        // and finally close the streams
-        return null;
+    public List<E> load() throws PersistenceException {
+        try{
+            FileInputStream fis = new FileInputStream(location);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<E> member = null;
+            Object obj = ois.readObject();
+            if(obj instanceof List<?>) { // Prüfen, ob das Objekt eine Liste ist
+                member = (List<E>) obj;
+            }
+            ois.close();
+            return member;
+        } catch(IOException ioe){
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable, ioe.getMessage());
+        } catch(ClassNotFoundException cnfe) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ConnectionNotAvailable, cnfe.getMessage());
+        }
     }
 }
