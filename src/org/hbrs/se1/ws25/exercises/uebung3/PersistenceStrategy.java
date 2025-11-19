@@ -1,4 +1,6 @@
-package org.hbrs.se1.ws25.exercises.uebung3.persistence;
+package org.hbrs.se1.ws25.exercises.uebung3;
+
+import org.hbrs.se1.ws25.exercises.uebung3.persistence.PersistenceException;
 
 import java.util.List;
 

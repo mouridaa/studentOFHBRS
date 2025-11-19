@@ -1,0 +1,19 @@
+package org.hbrs.se1.ws25.exercises.uebung4.task2.model;
+
+import org.hbrs.se1.ws25.exercises.uebung4.task2.controller.exception.PersistenceException;
+
+import java.util.List;
+
+/**
+ * Interface for defining basic methods for a persistence mechanism
+ * Each concrete algorithm (i.e. strategy) must implement this method
+ * This interface corresponds to the abstract strategy w.r.t. to the
+ * Strategy Design Pattern (GoF).
+ *
+ * @param <E>
+ */
+
+public interface PersistenceStrategy<E> {
+    public void save(List<E> member) throws PersistenceException;
+    public List<E> load() throws PersistenceException;
+}

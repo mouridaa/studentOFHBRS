@@ -2,7 +2,10 @@ package org.hbrs.se1.ws25.tests.uebung3;
 
 import org.hbrs.se1.ws25.exercises.uebung2.ContainerException;
 import org.hbrs.se1.ws25.exercises.uebung2.Member;
-import org.hbrs.se1.ws25.exercises.uebung3.persistence.*;
+import org.hbrs.se1.ws25.exercises.uebung3.Container;
+import org.hbrs.se1.ws25.exercises.uebung3.persistence.PersistenceException;
+import org.hbrs.se1.ws25.exercises.uebung3.PersistenceStrategyMongoDB;
+import org.hbrs.se1.ws25.exercises.uebung3.PersistenceStrategyStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -83,6 +86,7 @@ class ContainerTest {
 
     @Test
     void testStoreDeleteAndLoad() {
+        //Round-Trip Test: Einfügen dann wieder löschen und dann den Zustand überprüfen
         try {
             // 1. Alles löschen
             container.deleteAllMembers();

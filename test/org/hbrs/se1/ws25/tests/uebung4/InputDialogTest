@@ -1,0 +1,244 @@
+# UserStory-Tool — Manuelle Tests (README)
+
+Dieses Dokument beschreibt die Durchführung manueller Tests für das UserStory‑Tool.
+Die Tests prüfen die Funktionalität der Eingabe über den `InputDialog` sowie das Verhalten der zentralen Funktionen wie Speichern, Laden, Ausgeben und Löschen.
+
+---
+
+## ✅ Testumgebung
+
+* Java installiert
+* Anwendung kompiliert
+* Zugriff auf Konsole/Terminal
+
+Start des Programms:
+
+```
+java InputDialog
+```
+
+---
+
+# ✅ Manuelle Testfälle
+
+## 1) Programmstart
+
+**Aktion:** Programm starten
+
+**Erwartung:**
+
+* Titel erscheint:
+  `UserStory-Tool V1.0 by Mourida K.`
+* Prompt `>` sichtbar
+
+---
+
+## 2) help
+
+**Eingabe:**
+
+```
+help
+```
+
+**Erwartung:**
+
+* Liste der verfügbaren Befehle:
+  `enter, store, load, dump, exit, help`
+
+---
+
+## 3) Vollständige Eingabe einer UserStory
+
+**Eingabe:**
+
+```
+enter
+```
+
+→ anschließend Prompts ausfüllen
+
+| Eingabeaufforderung      | Beispielwert |
+| ------------------------ | ------------ |
+| Enter ID                 | 1            |
+| Enter Titel              | Login        |
+| Enter Akzeptanzkriterium | Als Nutzer…  |
+| Enter Mehrwert           | 5            |
+| Enter Strafe             | 3            |
+| Enter Aufwand            | 2            |
+| Enter Risiko             | 2            |
+| Enter Projekt            | WebApp       |
+
+**Erwartung:**
+
+* UserStory wird gespeichert
+* Keine Fehlermeldung
+
+---
+
+## 4) Partielle Eingabe
+
+**Eingabe:**
+
+```
+enter titel mehrwert
+```
+
+→ nur diese Werte werden abgefragt
+
+**Erwartung:**
+
+* Nur Titel und Mehrwert müssen eingegeben werden
+* UserStory wird gespeichert
+
+---
+
+## 5) Ungültige Eingaben (Nummern)
+
+**Eingabeablauf:**
+
+```
+enter
+> Enter Mehrwert: 10
+```
+
+**Erwartung:**
+
+* Fehlermeldung:
+  `Mehrwert muss zwischen 1 und 5 liegen`
+
+---
+
+## 6) Duplicate ID
+
+**Ablauf:**
+
+* Zwei UserStories mit derselben ID eingeben
+
+**Erwartung:**
+
+* `ContainerException` / Fehlerausgabe
+
+---
+
+## 7) dump
+
+**Eingabe:**
+
+```
+dump
+```
+
+**Erwartung:**
+
+* Anzeige aller UserStories
+
+---
+
+## 8) dump projekt
+
+**Eingabe:**
+
+```
+dump projekt WebApp
+```
+
+**Erwartung:**
+
+* Nur UserStories zu Projekt `WebApp` werden angezeigt
+
+---
+
+## 9) store
+
+**Eingabe:**
+
+```
+store
+```
+
+**Erwartung:**
+
+* Daten werden gespeichert
+* Keine Fehlermeldung
+
+---
+
+## 10) load
+
+**Eingabe:**
+
+```
+load
+```
+
+**Erwartung:**
+
+* Daten aus Speicher geladen
+
+---
+
+
+## 11) Ungültiger Befehl
+
+**Eingabe:**
+
+```
+abcd
+```
+
+**Erwartung:**
+
+* Fehlermeldung + Hinweis auf gültige Befehle
+>"Diese Eingabe ist ungültig!
+ Mögliche Eingaben:
+ enter, store, load, dump, exit, help"
+
+---
+
+## 12) exit
+
+**Eingabe:**
+
+```
+exit
+```
+
+**Erwartung:**
+
+* Programm beendet sich
+
+## 13) testKennzahlen
+
+**Eingabe:**
+
+```
+enter mehrwert
+
+```
+Enter Mehrwert: abcd
+
+---
+
+**Erwartung:**
+
+* Fehlermeldung: "Bitte nur ganze Zahlen eingeben!"
+
+# Testübersicht
+
+| Nr | Eingabe              | Erwartung          |
+| -- | -------------------- | ------------------ |
+| 1  | Start                | Begrüßung          |
+| 2  | help                 | Befehlsliste       |
+| 3  | enter                | Story gespeichert  |
+| 4  | enter titel mehrwert | selektive Eingabe  |
+| 5  | Mehrwert=10          | Fehlermeldung      |
+| 6  | doppelte ID          | Fehler             |
+| 7  | dump                 | Anzeige            |
+| 8  | dump projekt X       | gefilterte Anzeige |
+| 9  | store                | Daten gespeichert  |
+| 10 | load                 | Daten geladen      |
+| 11 | abcd                 | Fehlermeldung      |
+| 12 | exit                 | Programm beendet   |
+| 13 | Mehrwert=abc         |
+

@@ -138,6 +138,11 @@ public class Container {
 		String project = "Coll@HBRS";
 		// ToDo: Filterung nach einem Projekt (F5)
 
+//        this.liste.stream()
+//                .filter(userStory -> userStory.getProject().equals(project))
+//                .filter(userStory ->) userStory.getPrio() > 3.0)
+//                    .forEach(userStory -> System.out.println(userStory))
+
 	}
 
 	/*

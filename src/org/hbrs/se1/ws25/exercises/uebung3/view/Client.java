@@ -1,10 +1,10 @@
-package org.hbrs.se1.ws25.exercises.uebung3.persistence.view;
+package org.hbrs.se1.ws25.exercises.uebung3.view;
 
 
 import org.hbrs.se1.ws25.exercises.uebung2.ContainerException;
 import org.hbrs.se1.ws25.exercises.uebung2.Member;
-import org.hbrs.se1.ws25.exercises.uebung3.persistence.ConcreteMember;
-import org.hbrs.se1.ws25.exercises.uebung3.persistence.Container;
+import org.hbrs.se1.ws25.exercises.uebung3.ConcreteMember;
+import org.hbrs.se1.ws25.exercises.uebung3.Container;
 
 import java.util.List;
 

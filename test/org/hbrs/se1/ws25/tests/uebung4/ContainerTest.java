@@ -1,10 +1,11 @@
-package org.hbrs.se1.ws25.solutions.uebung3.test;
+package org.hbrs.se1.ws25.tests.uebung4;
 
-import org.hbrs.se1.ws25.solutions.uebung3.*;
-import org.hbrs.se1.ws25.solutions.uebung3.Member;
-import org.hbrs.se1.ws25.solutions.uebung3.persistence.PersistenceException;
-import org.hbrs.se1.ws25.solutions.uebung3.persistence.PersistenceStrategyMongoDB;
-import org.hbrs.se1.ws25.solutions.uebung3.persistence.PersistenceStrategyStream;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.controller.exception.ContainerException;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.controller.exception.PersistenceException;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.model.Container;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.model.PersistenceStrategyMongoDB;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.model.PersistenceStrategyStream;
+import org.hbrs.se1.ws25.exercises.uebung4.task2.model.UserStory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +25,11 @@ class ContainerTest {
     @Test
     void testNoStrategeySet() {
         try {
-            container.setPersistenceStrategie(null);
+            container.setPersistenceStrategy(null);
             container.store();
-
         } catch (PersistenceException e) {
             System.out.println("Message: " + e.getMessage() );
-            assertEquals( e.getMessage() , "Strategy not initialized" );
+            assertEquals( "Strategy not initialized", e.getMessage() );
             assertEquals( PersistenceException.ExceptionType.NoStrategyIsSet ,
                     e.getExceptionTypeType()  );
         }
@@ -38,10 +38,10 @@ class ContainerTest {
     @Test
     void testMongoDBNotImplementedOldFashioned() {
         try {
-            container.setPersistenceStrategie( new PersistenceStrategyMongoDB<Member>() );
+            container.setPersistenceStrategy( new PersistenceStrategyMongoDB<UserStory>() );
             container.store();
         } catch (PersistenceException e) {
-            assertEquals( e.getMessage() , "MongoDB is not implemented!" );
+            assertEquals("MongoDB is not implemented!" , e.getMessage());
             assertEquals( e.getExceptionTypeType() ,
                     PersistenceException.ExceptionType.ImplementationNotAvailable );
         }
@@ -50,18 +50,18 @@ class ContainerTest {
     @Test
     void testMongoDBNotImplementedHipSolution() {
         // Set a strategy, which has not been implemented
-        container.setPersistenceStrategie( new PersistenceStrategyMongoDB<Member>() );
+        container.setPersistenceStrategy( new PersistenceStrategyMongoDB<UserStory>() );
 
         // Testing store
         PersistenceException e = assertThrows(
                 PersistenceException.class , () -> container.store() );
-        assertEquals( e.getMessage() , "MongoDB is not implemented!"  );
+        assertEquals("MongoDB is not implemented!"  , e.getMessage());
         assertEquals(  e.getExceptionTypeType() , PersistenceException.
                 ExceptionType.ImplementationNotAvailable );
 
         // Do the same with load
         e = assertThrows( PersistenceException.class , () -> container.load() );
-        assertEquals( e.getMessage() , "MongoDB is not implemented!"  );
+        assertEquals("MongoDB is not implemented!", e.getMessage());
         assertEquals(  e.getExceptionTypeType() , PersistenceException.
                 ExceptionType.ImplementationNotAvailable );
     }
@@ -69,17 +69,17 @@ class ContainerTest {
     @Test
     void testWrongLocationOfFile() {
         try {
-            PersistenceStrategyStream<Member> strat = new PersistenceStrategyStream<Member>();
+            PersistenceStrategyStream<UserStory> strat = new PersistenceStrategyStream<UserStory>();
 
             // FileStreams do not like directories, so try this out ;-)
             strat.setLOCATION("/Users/saschaalda/tmp");
-            container.setPersistenceStrategie( strat );
+            container.setPersistenceStrategy( strat );
             container.store();
 
         } catch (PersistenceException e) {
             System.out.println("Message: " + e.getMessage() );
-            assertEquals( e.getMessage() , "Error in opening the connection, File could not be found" );
-            assertEquals(  PersistenceException.ExceptionType.ConnectionNotAvailable  ,
+            assertEquals("Fehler beim Speichern der Datei!", e.getMessage());
+            assertEquals(  PersistenceException.ExceptionType.SaveFailure  ,
                     e.getExceptionTypeType() ) ;
         }
     }
@@ -88,15 +88,15 @@ class ContainerTest {
     void testStoreDeleteAndLoad() {
         try {
             // Löschen aller Objekte, damit das Singleton leer ist
-            container.deleteAllMembers();
+            container.deleteAllUserStories();
 
-            container.setPersistenceStrategie( new PersistenceStrategyStream<Member>() );
-            container.addMember(new MemberKonkret(1));
+            container.setPersistenceStrategy( new PersistenceStrategyStream<UserStory>() );
+            container.addUserStory(new UserStory(1));
 
             assertEquals( 1 , container.size() );
             container.store();
 
-            container.deleteMember(1);
+            container.deleteUserStory(1);
             assertEquals(0 , container.size() );
 
             container.load();
@@ -110,10 +110,10 @@ class ContainerTest {
     @Test
     void testStoreManyTime() {
         try {
-            container.setPersistenceStrategie( new PersistenceStrategyStream<Member>() );
-            container.addMember(new MemberKonkret(1));
-            container.addMember(new MemberKonkret(12) ) ;
-            container.addMember(new MemberKonkret(13) );
+            container.setPersistenceStrategy( new PersistenceStrategyStream<UserStory>() );
+            container.addUserStory(new UserStory(1));
+            container.addUserStory(new UserStory(12) ); ;
+            container.addUserStory(new UserStory(13) );
 
             assertEquals( 3 , container.size() );
             container.store(); // overwriting existing ones!
@@ -129,7 +129,7 @@ class ContainerTest {
     @Test
     void testLoadOneTime() {
         try {
-            container.setPersistenceStrategie( new PersistenceStrategyStream<Member>() );
+            container.setPersistenceStrategy( new PersistenceStrategyStream<UserStory>() );
             container.load();
             System.out.println("Größe des Files: " + container.size() );
 

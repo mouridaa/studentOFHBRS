@@ -16,7 +16,6 @@ public class Client {
         } catch (ContainerException e) {
             e.printStackTrace();
         }
-
         // Abspeichern veranlassen (Strategy muss hier nicht gesetzt werden!)
         try {
             container.store();

@@ -1,11 +1,9 @@
-package org.hbrs.se1.ws25.exercises.uebung3.persistence;
+package org.hbrs.se1.ws25.exercises.uebung3;
 
 import org.hbrs.se1.ws25.exercises.uebung2.Member;
 import java.io.Serializable;
 
 public class ConcreteMember implements Member, Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     private int id;
 

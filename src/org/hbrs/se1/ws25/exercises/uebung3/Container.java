@@ -1,7 +1,8 @@
-package org.hbrs.se1.ws25.exercises.uebung3.persistence;
+package org.hbrs.se1.ws25.exercises.uebung3;
 
 import org.hbrs.se1.ws25.exercises.uebung2.ContainerException;
 import org.hbrs.se1.ws25.exercises.uebung2.Member;
+import org.hbrs.se1.ws25.exercises.uebung3.persistence.PersistenceException;
 
 import java.util.ArrayList;
 import java.util.List;

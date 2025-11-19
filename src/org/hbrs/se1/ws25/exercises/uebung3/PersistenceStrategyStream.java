@@ -1,8 +1,8 @@
-package org.hbrs.se1.ws25.exercises.uebung3.persistence;
-import org.hbrs.se1.ws25.solutions.uebung2.Member;
+package org.hbrs.se1.ws25.exercises.uebung3;
+
+import org.hbrs.se1.ws25.exercises.uebung3.persistence.PersistenceException;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.io.FileOutputStream; //Schreibt Bytes in eine Datei
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * https://www.digitalocean.com/community/tutorials/objectoutputstream-java-write-object-file
      * (Last Access: Oct, 13th 2025)
      */
-    public void save(List<E> member) throws PersistenceException  {
+    public void save(List<E> member) throws PersistenceException {
         try {
             FileOutputStream fos = new FileOutputStream(location);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

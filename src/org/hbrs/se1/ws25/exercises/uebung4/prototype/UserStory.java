@@ -1,6 +1,6 @@
 package org.hbrs.se1.ws25.exercises.uebung4.prototype;
 
-    public class UserStory {
+    public class UserStory{
         // ToDo: Sind die Attribute der Klasse UserStory vollständig? Wie sieht es mit den
         //  Sichtbarkeiten aus? (F4)
 
